@@ -2,6 +2,7 @@ import './App.css'
 import { useState } from 'react'
 import PokemonList from './components/PokemonList'
 import PokemonDetails from './components/PokemonDetails'
+import PokemonForm from './components/PokemonForm'
 import NavBar from './components/NavBar'
 import { Route, Routes } from 'react-router-dom'
 
@@ -17,6 +18,11 @@ const App = () => {
 
   const [pokemon, setPokemon] = useState(initialState)
 
+  const addPokemon = (formData) => {
+    formData._id = pokemon.length + 1
+    setPokemon([...pokemon, formData])
+  }
+
   return (
     <>  
       <NavBar />
@@ -25,6 +31,7 @@ const App = () => {
       <Routes>
         <Route path={'/'} element={<h2>Home Page</h2>} />
         <Route path={'/pokemon'} element={<PokemonList pokemon={pokemon} />} />
+        <Route path={'/pokemon/new'} element={<PokemonForm addPokemon={addPokemon} />} />
         <Route path={'/pokemon/:pokemonId'} element={<PokemonDetails pokemon={pokemon} />} />
         <Route path={'*'} element={404} />
       </Routes>
